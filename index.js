@@ -1,14 +1,13 @@
+const express = require('express');
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const schedule = require("node-schedule");
 
+const app = express();
+const port = process.env.PORT || 3000;
+
 // Initialize the client with LocalAuth to save session data
 const client = new Client({
-  webVersionCache: {
-    type: "remote",
-    remotePath:
-      "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
-  },
   authStrategy: new LocalAuth(),
 });
 
@@ -60,3 +59,11 @@ client.on("auth_failure", (msg) => {
 });
 
 client.initialize();
+
+app.get('/', (req, res) => {
+  res.send('WhatsApp bot is running.');
+});
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on http://0.0.0.0:${port}`);
+});
