@@ -8,8 +8,14 @@ const port = process.env.PORT || 3000;
 
 // Initialize the client with LocalAuth to save session data
 const client = new Client({
+  webVersionCache: {
+    type: "remote",
+    remotePath:
+      "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
+  },
   authStrategy: new LocalAuth(),
 });
+
 
 // Function to send a message
 const sendMessage = (client, number, message) => {
